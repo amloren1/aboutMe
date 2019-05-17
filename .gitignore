@@ -1,0 +1,13 @@
+.env
+*.pyc
+*.pem
+*.pub
+*.tar.gz
+*.zip
+*.sql
+*.db
+secrets.txt
+./tmp
+./build/*
+.idea/*
+.idea
