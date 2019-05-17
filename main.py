@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from config import DevConfig
 
 
@@ -6,9 +6,14 @@ app = Flask(__name__)
 app.config.from_object(DevConfig)
 
 
-@app.route
+@app.route('/')
 def home():
-    return '<h1>welcome home</h1>'
+    return render_template('home.html')
+
+@app.route('/resume')
+def resume():
+    return render_template('resume.html')
+
 
 if __name__ == '__main__':
     app.run()
