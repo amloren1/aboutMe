@@ -14,6 +14,9 @@ def home():
 def resume():
     return render_template('resume.html')
 
+@app.route('/exoplex')
+def exoplex():
+    return render_template('exoplex.html')
 
 if __name__ == '__main__':
     app.run()
