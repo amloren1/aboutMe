@@ -18,5 +18,23 @@ def resume():
 def exoplex():
     return render_template('exoplex.html')
 
+
+@app.route("/blog")
+def blog():
+    user = {'username': 'Miguel'}
+    posts = [
+        {
+            'author': {'username': 'John'},
+            'body': 'Beautiful day in Portland!'
+        },
+        {
+            'author': {'username': 'Susan'},
+            'body': 'The Avengers movie was so cool!'
+        }
+    ]
+    return render_template("blog.html", title='Home', user=user, posts=posts)
+
+
+
 if __name__ == '__main__':
     app.run()
