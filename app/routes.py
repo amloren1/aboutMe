@@ -6,15 +6,17 @@ from app import app
 
 @app.route('/')
 def home():
-    return "Here" #render_template('../templates/home.html')
+    return render_template('home.html')
+
 
 @app.route('/resume')
 def resume():
-    return "There" #render_template('../templates/resume.html')
+    return render_template('resume.html')
+
 
 @app.route('/exoplex')
 def exoplex():
-    return "Bad Gateway"#render_template('../templates/exoplex.html')
+    return render_template('exoplex.html')
 
 if __name__ == '__main__':
     app.run()
