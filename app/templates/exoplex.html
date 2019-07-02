@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <body>
+  {% extends "layout.html" %}
+  {% block content %}
+   <div class="exoplex">
+     <h1>Abstract</h1>
+       <p>The pace of exoplanet discoveries has rapidly accelerated in the past few decades and the
+           number of planets with measured mass and radius is expected to pick up in the coming years.
+           Many more planets with a size similar to earth are expected to be found. Currently,
+           software for characterizing rocky planet interiors is lacking. There is no doubt that a
+           planet’s interior plays a key role in determining surface conditions including atmosphere composition
+           and land area. Comparing data with diagrams of mass vs. radius for terrestrial planets provides
+           only a first-order estimate of the internal structure and composition of planets
+           [e.g. Seager et al 2007]. This thesis will present a new Python library, ExoPlex, which has routines
+           to create a forward model of rocky exoplanets between 0.1 and 5 Earth masses. The ExoPlex code offers users the
+           ability to model planets of arbitrary composition of Fe-Si-Mg-Al-Ca-O in addition to a water layer.
+           This is achieved by modeling rocky planets after the earth and other known terrestrial planets.
+           The three distinct layers which make up the Earth's internal structure are: core, mantle, and
+           water. Terrestrial planet cores will be dominated by iron however, like earth, there may be some quantity
+           of light element inclusion which can serve to enhance expected core volumes. In ExoPlex, these light element
+           inclusions are S-Si-O and are included as iron-alloys. Mantles will have a more diverse mineralogy than
+           planet cores. Unlike most other rocky planet models, ExoPlex remains unbiased in its treatment of the mantle in terms of
+           composition. Si-Mg-Al-Ca oxide components are combined by predicting the mantle mineralogy using a Gibbs free energy
+           minimization software package called Perple\_X [Connolly 2009]. By allowing an arbitrary composition, ExoPlex can uniquely model planets using
+           their host star’s composition as an indicator of planet composition. This is a proven technique [Dorn et al 2015]
+           which has not yet been widely utilized, possibly due to the lack of availability of easy to use software. I present a
+           model sensitivity analysis to indicate the most important parameters to constrain in future observing missions. ExoPlex is currently available on
+           PyPI so it may be installed using pip or conda on Mac OS or Linux based operating systems. It requires a specific scripting
+           environment which is explained in the documentation currently stored on the ExoPlex GitHub page. (less)</p>
+       <p><a href="https://repository.asu.edu/items/51736" target="_blank" rel="nofollow">Full thesis available here</a>
+</p>
+   </div>
+  {% endblock %}
+  </body>
+</html>
