@@ -4,6 +4,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired
 
+
 class LoginForm(FlaskForm):
     # first arg of each field is a descriptor or label
     # second is validator, optional. DataRequired makes sure that the field is filled

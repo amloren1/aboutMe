@@ -1,5 +1,7 @@
 from flask import Flask, render_template
 #from config import DevConfig
+from app.forms import LoginForm
+
 
 
 from app import app
@@ -34,7 +36,10 @@ def blog():
     ]
     return render_template("blog.html", title='Home', user=user, posts=posts)
 
-
+@app.route('/login')
+def login():
+    form = LoginForm()
+    return render_template('login.html', title='Sign In', form=form)
 
 if __name__ == '__main__':
     app.run()
