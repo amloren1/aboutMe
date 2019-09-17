@@ -14,29 +14,47 @@
     {% else %}
       <title> Alejandro Web </title>
     {% endif %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
   </head>-->
-  <body>
-    <header>
-      <div class="container">
-        <h2 class="logo">Alejandro</h2>
 
-        <strong><nav>
-          <ul class="menu">
-            <li><a href="{{ url_for('home') }}">Home</a></li>
-            <li><a href="{{ url_for('resume') }}">Resume</a></li>
-            <li><a href="{{ url_for('projects') }}">Projects</a></li>
-            <li><a href="{{ url_for('images') }}">Images</a></li>
-            <li><a href="{{ url_for('blog') }}">Blog</a></li>
-            <li><a href="{{ url_for('login') }}">login</a></li>
-          </ul>
-        </nav></strong>
-      </div>
-        <div class="container">
-        {% block content %}
-        {% endblock %}
-        </div>
+  <body>
+    <header class="site-header">
+        <header class="site-header">
+            <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+              <div class="container">
+                <a class="navbar-brand mr-4" href="/">Alejandro</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarToggle">
+                  <div class="navbar-nav mr-auto">
+                    <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
+                    <a class="nav-item nav-link" href="{{ url_for('projects') }}">Projects</a>
+                    <a class="nav-item nav-link" href="{{ url_for('images') }}">Images</a>
+                    <a class="nav-item nav-link" href="{{ url_for('resume') }}">Resume</a>
+                  </div>
+                  <!-- Navbar Right Side -->
+                  <div class="navbar-nav">
+                    <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
+                  </div>
+                </div>
+              </div>
+            </nav>
     </header>
+
+      <main role="main" class="container">
+          <div class="row">
+              <div class="col-md-12">
+                  {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                      {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                          {{ message }}
+                        </div>
+                      {% endfor %}
+                    {% endif %}
+                  {% endwith %}
+                  {% block content %}{% endblock %}
+        </div>
 
      <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

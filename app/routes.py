@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, request
 #from config import DevConfig
 from app.forms import LoginForm
 
@@ -42,11 +42,23 @@ def images():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    def check_login(user, password):
+        if user == "admin" and password == "dakine":
+            return True
+        else:
+            return False
+
     form = LoginForm()
-    if form.validate_on_submit():
-        flash('Login requested for user {}, remember_me={}'.format(
-            form.username.data, form.remember_me.data))
-        return redirect('/images')
+    if request.method == "POST":
+        if form.validate_on_submit():
+            if check_login(form.username.data, form.password.data):
+                flash(f'Successful Login, Welcome Admin: {form.username.data}', 'success')
+        #TODO: validate as admin
+                return redirect(url_for('images'))
+            else:
+                flash('Login Unsuccessful. Please check username and password', 'danger')
+        else:
+            flash('Login Unsuccessful. Please check username and password', 'danger')
     return render_template('login.html', title='Sign In', form=form)
 
 if __name__ == '__main__':
