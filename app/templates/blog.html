@@ -1,4 +1,7 @@
-<html>
+
+{% extends "layout.html" %}
+
+{% block content %}
     <head>
         {% if title %}
         <title>{{ title }} - Microblog</title>
@@ -12,4 +15,4 @@
         <div><p>{{ post.author.username }} says: <b>{{ post.body }}</b></p></div>
         {% endfor %}
     </body>
-</html>
+{% endblock  content %}

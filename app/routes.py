@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect
+from flask import render_template, flash, redirect, url_for
 #from config import DevConfig
 from app.forms import LoginForm
 
@@ -16,9 +16,9 @@ def resume():
     return render_template('resume.html')
 
 
-@app.route('/exoplex')
-def exoplex():
-    return render_template('exoplex.html')
+@app.route('/projects')
+def projects():
+    return render_template('projects.html')
 
 
 @app.route("/blog")
