@@ -18,7 +18,7 @@ class MessagesForm(FlaskForm):
     # first arg of each field is a descriptor or label
     # second is validator, optional. DataRequired makes sure that the field is filled
     name = StringField('Username', validators=[DataRequired()])
-    email = StringField('Password', validators=[Email()])
+    email = StringField('Email', validators=[DataRequired(),Email()])
     message = PasswordField('Password', validators=[DataRequired()])
     #remember_me = BooleanField('Remember Me')
     submit = SubmitField('Submit')
