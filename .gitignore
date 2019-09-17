@@ -11,3 +11,6 @@ secrets.txt
 ./build/*
 .idea/*
 .idea
+.jpg
+.jpeg
+.pdf

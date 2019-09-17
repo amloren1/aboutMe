@@ -36,6 +36,9 @@ def blog():
     ]
     return render_template("blog.html", title='Home', user=user, posts=posts)
 
+@app.route('/images', methods=["GET"])
+def images():
+    return render_template('images.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
