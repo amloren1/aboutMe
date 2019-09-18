@@ -1,10 +1,11 @@
 from flask import render_template, flash, redirect, url_for, request
+from flask_sqlalchemy import SQLAlchemy
 #from config import DevConfig
 from app.forms import LoginForm
 
-
-
 from app import app
+
+
 
 @app.route('/')
 def home():
