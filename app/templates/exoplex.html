@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="content-section">
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <fieldset class="form_group">
+            <legend class="border-bottom mb-4"> ExoPlex: The Exoplanet Modeling Tool </legend>
+
+            <div class="form_group">
+                {{ form.simg.label(class="form-control-label") }}
+                {{ form.simg(class="form-control form-control-lg") }}
+            </div>
+            <div class="form_group">
+                {{ form.femg.label(class="form-control-label") }}
+                {{ form.femg(class="form-control form-control-lg") }}
+            </div>
+            <div class="form_group">
+                {{ form.mass.label(class="form-control-label") }}
+                {{ form.mass(class="form-control form-control-lg") }}
+            </div>
+
+            <div class="form_group">
+                {{ form.run(class="btn btn-outline-info") }}
+            </div>
+        </fieldset>
+    </form>
+</div>
+{% endblock content %}
