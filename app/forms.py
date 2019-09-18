@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 
 # field types imported directly from wtf
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextField, FloatField
 from wtforms.validators import DataRequired, Email
 
 
@@ -22,3 +22,14 @@ class MessagesForm(FlaskForm):
     message = PasswordField('Password', validators=[DataRequired()])
     #remember_me = BooleanField('Remember Me')
     submit = SubmitField('Submit')
+
+
+class PlanetParamsForm(FlaskForm):
+    # first arg of each field is a descriptor or label
+    # second is validator, optional. DataRequired makes sure that the field is filled
+    femg = FloatField('Fe/Mg', validators=[DataRequired()])
+    simg = FloatField('Si/Mg', validators=[DataRequired()])
+    mass = FloatField('Mass (M_earth)', validators=[DataRequired()])
+    run = SubmitField('Run ExoPlex')
+
+

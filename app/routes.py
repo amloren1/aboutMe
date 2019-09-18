@@ -1,9 +1,9 @@
 from flask import render_template, flash, redirect, url_for, request
 from flask_sqlalchemy import SQLAlchemy
 #from config import DevConfig
-from app.forms import LoginForm
+from app.forms import LoginForm, PlanetParamsForm
 
-from app import app
+from app import app, db
 
 
 
@@ -40,6 +40,18 @@ def blog():
 @app.route('/images', methods=["GET"])
 def images():
     return render_template('images.html')
+
+
+@app.route('/exoplex', methods=['GET', 'POST'])
+def exoplex():
+    def check_login(user, password):
+        if user == "admin" and password == "dakine":
+            return True
+        else:
+            return False
+    params = PlanetParamsForm()
+
+    return render_template("exoplex.html", titel = "ExoPlex", form = params)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
