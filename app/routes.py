@@ -1,8 +1,9 @@
 from flask import render_template, flash, redirect, url_for, request
+from flask_login import login_user, logout_user, current_user
 from flask_sqlalchemy import SQLAlchemy
 #from config import DevConfig
 from app.forms import LoginForm, PlanetParamsForm
-from app.models import Planet
+from app.models import Planet, User
 from app import app, db
 
 
@@ -59,23 +60,24 @@ def exoplex():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    def check_login(user, password):
-        if user == "admin" and password == "dakine":
-            return True
-        else:
-            return False
+    if current_user.is_authenticated:
+        return redirect(url_for("home"))
 
     form = LoginForm()
     if request.method == "POST":
-        if form.validate_on_submit() and check_login(form.username.data, form.password.data):
+        user = User.query.filter_by(username = form.username.data).first()
+        if (form.validate_on_submit() and
+            user.password == form.password.data):
+            login_user(user)
             flash('Successful Login, Welcome Alejandro!', 'success')
-            #TODO: validate as admin
-
             return redirect(url_for('images'))
         else:
             flash('Login Unsuccessful. Please check username and password', 'danger')
 
     return render_template('login.html', title='Sign In', form=form)
 
-if __name__ == '__main__':
-    app.run()
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for("home"))
+

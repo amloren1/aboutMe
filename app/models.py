@@ -8,7 +8,7 @@ from app import db, login_manager
 # manage logged in users
 @login_manager.user_loader
 def load_user(user_id):
-    return db.query.get(int(user_id))
+    return User.query.get(int(user_id))
 
 
 class User(db.Model, UserMixin):
