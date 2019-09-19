@@ -81,3 +81,6 @@ def logout():
     logout_user()
     return redirect(url_for("home"))
 
+@app.route("/cam_query")
+def cam_query():
+    return render_template("cam_query.html")
