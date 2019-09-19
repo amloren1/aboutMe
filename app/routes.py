@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_sqlalchemy import SQLAlchemy
 #from config import DevConfig
 from app.forms import LoginForm, PlanetParamsForm
-
+from app.models import Planet
 from app import app, db
 
 
@@ -49,8 +49,12 @@ def exoplex():
             return True
         else:
             return False
-    params = PlanetParamsForm()
 
+    params = PlanetParamsForm()
+    if params.validate_on_submit():
+        planet = Planet(femg=params.femg.data, simg=params.simg.data, mass=params.mass.data)
+        db.session.add(planet)
+        db.session.commit()
     return render_template("exoplex.html", titel = "ExoPlex", form = params)
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -63,15 +67,14 @@ def login():
 
     form = LoginForm()
     if request.method == "POST":
-        if form.validate_on_submit():
-            if check_login(form.username.data, form.password.data):
-                flash(f'Successful Login, Welcome Admin: {form.username.data}', 'success')
-        #TODO: validate as admin
-                return redirect(url_for('images'))
-            else:
-                flash('Login Unsuccessful. Please check username and password', 'danger')
+        if form.validate_on_submit() and check_login(form.username.data, form.password.data):
+            flash('Successful Login, Welcome Alejandro!', 'success')
+            #TODO: validate as admin
+
+            return redirect(url_for('images'))
         else:
             flash('Login Unsuccessful. Please check username and password', 'danger')
+
     return render_template('login.html', title='Sign In', form=form)
 
 if __name__ == '__main__':

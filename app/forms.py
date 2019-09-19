@@ -1,9 +1,9 @@
 from flask_wtf import FlaskForm
-
 # field types imported directly from wtf
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextField, FloatField
-from wtforms.validators import DataRequired, Email
+from wtforms.validators import DataRequired, Email, ValidationError
 
+from app.models import User
 
 class LoginForm(FlaskForm):
     # first arg of each field is a descriptor or label
@@ -13,6 +13,14 @@ class LoginForm(FlaskForm):
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign In')
 
+    #validation
+    def validate_login(self, username, password):
+        user = User.query.filter_by(username.data).first()
+
+        if not user:
+            raise ValidationError("Validation Message")
+        elif user.password != password:
+            raise ValidationError("Validation Message")
 
 class MessagesForm(FlaskForm):
     # first arg of each field is a descriptor or label
