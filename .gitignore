@@ -5,7 +5,6 @@
 *.tar.gz
 *.zip
 *.sql
-*.db
 secrets.txt
 ./tmp
 ./build/*
