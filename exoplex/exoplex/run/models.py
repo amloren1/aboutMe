@@ -61,7 +61,7 @@ def inputs_from_file(script):
 def inputs_from_input(femg, simg, camg=0, almg=0, wtr_frac=0):
 
     si_cor, o_cor, s_cor, feo = (0,0,0,0)
-    return [[wtr_frac,femg,simg,camg,almg,feo,si_cor,o_cor, s_cor]]
+    return [list(map(abs,[wtr_frac,femg,simg,camg,almg,feo,si_cor,o_cor, s_cor]))]
 
 def map_inputs_from_file(script):
     x = __import__(script, ['*'])
@@ -173,11 +173,10 @@ def exoplex(script=None, mass=None, femg=None, simg=None ):
         # result is a profile for density, mass, radius,
         # heat capacity, emissivity of heat and mineralogy
         # run_planet_mass(mass_planet, compositional_params, structure_params, layers,filename, truncate_comp)
-
         if independent_var == 'M' or independent_var == 'm':
-            Planet[i] = exo.run_planet_mass(x.X[0],compositional_params,structure_params,layers,sol_filename, cmf2)
+            Planet[i] = exo.run_planet_mass(X,compositional_params,structure_params,layers,sol_filename, cmf2)
         elif independent_var == 'R' or independent_var == 'r':
-            Planet[i] = exo.run_planet_radius(x.X[0], compositional_params, structure_params, layers,sol_filename, cmf2)
+            Planet[i] = exo.run_planet_radius(X, compositional_params, structure_params, layers,sol_filename, cmf2)
         else:
             print('\n***Unable to interpret model selection indp = {}***'.format(x.indp))
             print('\n Please select independent parameter as \'R\' (radius) or \'M\' (mass)')

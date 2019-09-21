@@ -86,7 +86,7 @@ def run_planet_radius(radius_planet, compositional_params, structure_params, lay
 
     else:
 
-        core_mass_frac = truncate_comp.get('wtCore')
+        core_mass_frac = abs(truncate_comp.get('wtCore'))
 
         print('\nUsing molar ratios to define mantle only')
         print('Entered core wt%% = {}\n'.format(round(core_mass_frac*100.,6)))
@@ -105,8 +105,8 @@ def run_planet_radius(radius_planet, compositional_params, structure_params, lay
 
         wtFe = round(100.*(1- sum(compositional_params[6:])), 8)
 
-        Core_wt_per = {'Fe': wtFe,'Si':round(100.*compositional_params[6],8) \
-          ,'O':round(100.*compositional_params[7],8),'S':round(100.*compositional_params[8],8)}
+        Core_wt_per = {'Fe': abs(wtFe),'Si':abs(round(100.*compositional_params[6],8)) \
+          ,'O':abs(round(100.*compositional_params[7],8)),'S':abd(round(100.*compositional_params[8],8))}
         Core_mol_per = 'place holder?'
 
 
