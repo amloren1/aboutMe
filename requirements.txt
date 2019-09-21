@@ -9,5 +9,6 @@ Jinja2==2.10.1
 matplotlib==3.0.3
 MarkupSafe==1.1.1
 numpy==1.16.2
+scipy==1.2.1
 Werkzeug==0.15.4
 WTForms==2.2.1
