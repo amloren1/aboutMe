@@ -1,6 +1,18 @@
+from datetime import date
+
+
 from flask_wtf import FlaskForm
 # field types imported directly from wtf
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextField, FloatField
+from wtforms import (
+    StringField,
+    PasswordField,
+    BooleanField,
+    SubmitField,
+    TextField,
+    FloatField,
+    DateField,
+    TimeField
+)
 from wtforms.validators import DataRequired, Email, ValidationError
 
 from app.models import User
@@ -39,5 +51,16 @@ class PlanetParamsForm(FlaskForm):
     simg = FloatField('Si/Mg', validators=[DataRequired()])
     mass = FloatField('Mass (M_earth)', validators=[DataRequired()])
     run = SubmitField('Run ExoPlex')
+
+
+
+class CamQueryForm(FlaskForm):
+    # first arg of each field is a descriptor or label
+    # second is validator, optional. DataRequired makes sure that the field is filled
+    start_date = DateField('Start date', validators=[DataRequired()])
+    start_time = TimeField('Start time', validators=[DataRequired()])
+    end_date = DateField('End date', validators=[DataRequired()], default=date.today())
+    end_time = TimeField('End time', validators=[DataRequired()])
+    find = SubmitField('Find')
 
 

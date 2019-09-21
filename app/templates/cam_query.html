@@ -5,6 +5,36 @@
 
 {% block content %}
     <h1> {{ current_user.username }}</h1>
+
+    <div class="content-section">
+            <form action="" method="post" novalidate>
+                {{ form.hidden_tag() }}
+                <fieldset class="form_group">
+                    <legend class="border-bottom mb-4"> Select Video Date/Time Range </legend>
+
+                    <div class="form_group">
+                        {{ form.start_date.label(class="form-control-label") }}
+                        {{ form.start_date(class="form-control form-control-lg") }}
+                    </div>
+                    <div class="form_group">
+                        {{ form.start_time.label(class="form-control-label") }}
+                        {{ form.start_time(class="form-control form-control-lg") }}
+                    </div>
+                    <div class="form_group">
+                        {{ form.end_date.label(class="form-control-label") }}
+                        {{ form.end_date(class="form-control form-control-lg") }}
+                    </div>
+
+                    <div class="form_group">
+                            {{ form.end_time.label(class="form-control-label") }}
+                            {{ form.end_time(class="form-control form-control-lg") }}
+                        </div>
+                    <div class="form_group">
+                        {{ form.find(class="btn btn-outline-info") }}
+                    </div>
+                </fieldset>
+            </form>
+        </div>
 {% endblock content %}
 
 
