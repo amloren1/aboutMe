@@ -63,20 +63,20 @@ def exoplex():
 #methods determine the functions accepted by this view
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    # if user is already logged in, send them to the home route
     if current_user.is_authenticated:
         return redirect(url_for("home"))
-
     form = LoginForm()
     # when browser sends get request, this if statement is skipped and the template is rendered
     # as per the return statement below
     if request.method == "POST":
         user = User.query.filter_by(username = form.username.data).first()
+        # check password against hash in database, also validate pswd
         if (form.validate_on_submit() and
-            user.password == form.password.data):
+            user.check_password(form.password.data)):
             login_user(user)
             flash('Successful Login, Welcome Alejandro!', 'success')
             next_page = request.args.get("next")
-
             return redirect(next_page) if next_page else redirect(url_for('images'))
         else:
             flash('Login Unsuccessful. Please check username and password', 'danger')
