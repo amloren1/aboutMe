@@ -47,17 +47,28 @@ def exoplex():
         # the resulting radius in the app database
         planet_params = Planet(femg=params.femg.data, simg=params.simg.data, mass=params.mass.data)
         Planet_run = run.exoplex(femg=params.femg.data, simg=params.simg.data, mass=params.mass.data)
+        mass = Planet_run[0]['mass'][-1]/5.97e24
+        radius = Planet_run[0]['radius'][-1]/(6378.137*1000)
+        cmf=Planet_run[0]["cmf"]
+        breakpoint()
+        femg, simg, _, _, _ = Planet_run[0]['bulk_ratios']
+        breakpoint()
+        return render_template("exoplex_result.html",
+        radius=radius, mass=mass, cmf=cmf, femg='No', simg='no')
         db.session.add(planet_params)
         db.session.commit()
 
     return render_template("exoplex.html", titel = "ExoPlex", form = params)
 
+#methods determine the functions accepted by this view
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for("home"))
 
     form = LoginForm()
+    # when browser sends get request, this if statement is skipped and the template is rendered
+    # as per the return statement below
     if request.method == "POST":
         user = User.query.filter_by(username = form.username.data).first()
         if (form.validate_on_submit() and

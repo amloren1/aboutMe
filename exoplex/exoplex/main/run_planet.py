@@ -200,7 +200,7 @@ def run_planet_radius(radius_planet, compositional_params, structure_params, lay
     Planet['Vphi'], Planet['Vp'], Planet['Vs'] = functions.get_speeds(Planet, Core_wt_per, grids, layers)
     Planet['alpha'] = functions.get_alpha(Planet, Core_wt_per, grids, layers)
     Planet['mantle_ratios'] = Mantle_ratios
-
+    Planet['cmf'] = 100.*Planet['mass'][layers[1]]/Planet[i]['mass'][-1]
     return Planet
 
 
@@ -389,6 +389,8 @@ def run_planet_mass(mass_planet, compositional_params, structure_params, layers,
 
     Planet['bulk_ratios']   = bulk_ratios
     Planet['mantle_ratios'] = Mantle_ratios
+    Planet['cmf'] = 100.*Planet['mass'][layers[1]]/Planet['mass'][-1]
+
 
     return Planet
 
