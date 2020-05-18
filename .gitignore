@@ -13,3 +13,9 @@ secrets.txt
 .jpg
 .jpeg
 .pdf
+exoplex/Solutions/*
+exoplex/build.log
+exoplex/vertex.log
+exoplex/werami.log
+.vscode
+.python-version
