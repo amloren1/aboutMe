@@ -4,18 +4,24 @@ from datetime import date
 from flask_wtf import FlaskForm
 # field types imported directly from wtf
 from wtforms import (
-    StringField,
-    PasswordField,
     BooleanField,
+    DateField,
+    FloatField,
+    PasswordField,
+    StringField,
     SubmitField,
     TextField,
-    FloatField,
-    DateField,
+    TextAreaField,
     TimeField
 )
-from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
+from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError
 
 from app.models import User
+
+class EditProfileForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    about_me = TextAreaField('About me', validators=[Length(min=0, max=140)])
+    submit = SubmitField('Submit')
 
 class LoginForm(FlaskForm):
     # first arg of each field is a descriptor or label

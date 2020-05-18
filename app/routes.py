@@ -1,14 +1,21 @@
+from datetime import datetime
 
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, login_required,  current_user
 from flask_sqlalchemy import SQLAlchemy
 #from config import DevConfig
 
-from app.forms import LoginForm, PlanetParamsForm, CamQueryForm, RegistrationForm
+from app.forms import EditProfileForm, LoginForm, PlanetParamsForm, CamQueryForm, RegistrationForm
 from app.models import Planet, User
 from app import app, db
 from exoplex.exoplex import run
 
+
+@app.before_request
+def before_request():
+    if current_user.is_authenticated:
+        current_user.last_seen = datetime.utcnow()
+        db.session.commit()
 
 @app.route('/')
 def home():
@@ -119,3 +126,29 @@ def cam_query():
             flash('you messed something up. Make sure all fields are filled', 'danger')
 
     return render_template("cam_query.html", title="Security Video", form=form)
+
+
+@app.route("/user/<username>")
+@login_required
+def user(username):
+    """
+    simple page for users to check out their profile and make edits
+    """
+    user = User.query.filter_by(username=username).first_or_404()
+
+    return render_template("user.html", user = user)
+
+@app.route('/edit_profile', methods=['GET', 'POST'])
+@login_required
+def edit_profile():
+    form = EditProfileForm()
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.about_me = form.about_me.data
+        db.session.commit()
+        flash('Your changes have been saved.')
+        return redirect(url_for('edit_profile'))
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.about_me.data = current_user.about_me
+    return render_template('edit_profile.html', title='Edit Profile', form=form)
