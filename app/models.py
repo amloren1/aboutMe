@@ -21,6 +21,7 @@ def load_user(user_id):
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(20), unique = True, nullable = True, default = 'user') # no duplicates allowed
+    email = db.Column(db.String(120), index=True, unique=True, default = 'none@none.com')
     password_hash = db.Column(db.String(10), unique = True, nullable = True, default = 'None')
 
     def __repr__(self):

@@ -1,11 +1,14 @@
+
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, login_required,  current_user
 from flask_sqlalchemy import SQLAlchemy
 #from config import DevConfig
-from app.forms import LoginForm, PlanetParamsForm, CamQueryForm
+
+from app.forms import LoginForm, PlanetParamsForm, CamQueryForm, RegistrationForm
 from app.models import Planet, User
 from app import app, db
 from exoplex.exoplex import run
+
 
 @app.route('/')
 def home():
@@ -29,9 +32,9 @@ def blog():
     return render_template("blog.html", title='Home', user=user, posts=posts)
 
 @app.route('/images', methods=["GET"])
+@login_required
 def images():
     return render_template('images.html')
-
 
 @app.route('/exoplex', methods=['GET', 'POST'])
 def exoplex():
@@ -82,6 +85,24 @@ def login():
             flash('Login Unsuccessful. Please check username and password', 'danger')
 
     return render_template('login.html', title='Sign In', form=form)
+
+@app.route("/register", methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('images'))
+
+    form = RegistrationForm()
+    breakpoint()
+    if form.validate_on_submit():
+        user = User(username=form.username.data, email = form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Welcome, friend. You are now part of something bigger and more important than yourself.')
+
+        return redirect(url_for('login'))
+
+    return render_template('register.html', title='Register', form=form)
 
 @app.route("/logout")
 def logout():
