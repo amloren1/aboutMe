@@ -1,6 +1,7 @@
 import datetime
 
 from flask_login import UserMixin # used to meet requirements of flask-login
+from hashlib import md5
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from app import db, login_manager
@@ -33,6 +34,16 @@ class User(db.Model, UserMixin):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    def avatar(self, size):
+        """
+        function to pull avatars from Gravatar website. takes hashed email and image size as arguments
+        """
+        email = (self.email if self.email else 'defaul@default.com')
+        digest = md5(email.lower().encode('utf-8')).hexdigest()
+        return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
+            digest, size)
+
 
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
