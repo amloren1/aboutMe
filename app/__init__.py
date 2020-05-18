@@ -13,4 +13,4 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login' # login endpoint
 login_manager.login_message_category = "info"
 
-from app import routes, models #models will define the structure of the database
+from app import routes, models, errors #models will define the structure of the database
