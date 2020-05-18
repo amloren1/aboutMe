@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 
 from flask_login import UserMixin # used to meet requirements of flask-login
 from hashlib import md5
@@ -24,6 +24,8 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(20), unique = True, nullable = True, default = 'user') # no duplicates allowed
     email = db.Column(db.String(120), index=True, unique=True, default = 'none@none.com')
     password_hash = db.Column(db.String(10), unique = True, nullable = True, default = 'None')
+    about_me = db.Column(db.String(140)) # 140 character about me
+    last_seen = db.Column(db.DateTime, default = datetime.utcnow)
 
     def __repr__(self):
         # useful for printing details of the class instance
@@ -49,7 +51,7 @@ class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     message = db.Column(db.String(140), nullable = True)
     name = db.Column(db.String(140), nullable = True)
-    date = db.Column(db.DateTime, nullable = False, default=datetime.datetime.utcnow)
+    date = db.Column(db.DateTime, nullable = False, default=datetime.utcnow)
 
     def __repr__(self):
         return f"<Name: {self.name}\nmessage: {message}"
