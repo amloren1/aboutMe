@@ -1,8 +1,9 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="content-section">
-    <form action="" method="post" novalidate>
+    <div class="content-section">
+    <h1>Register</h1>
+        <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <fieldset class="form_group">
             <legend class="border-bottom mb-4"> Sign In </legend>
@@ -10,6 +11,10 @@
             <div class="form_group">
                 {{ form.username.label(class="form-control-label") }}
                 {{ form.username(class="form-control form-control-lg") }}
+            </div>
+            <div class="form_group">
+                {{ form.email.label(class="form-control-label") }}
+                {{ form.email(class="form-control form-control-lg") }}
             </div>
 
             <div class="form_group">
@@ -26,12 +31,24 @@
                 {{ form.password(class="form-control form-control-lg") }}
                 {% endif %}
             </div>
-
+            <div class="form_group">
+                {{ form.password2.label(class="form-control-label") }}
+                {% if form.password2.errors %}
+                {{ form.password2(class="form-control form-control-lg
+                is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.password2.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.password2(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
             <div class="form_group">
                 {{ form.submit(class="btn btn-outline-info") }}
             </div>
         </fieldset>
     </form>
 </div>
-<p>New User? <a href="{{ url_for('register') }}">Click to Register!</a></p>
 {% endblock content %}

@@ -10,14 +10,13 @@ def solfile_name(*args):
 
     Mantle_wt_per = args[0]
 
-    FeMg = args[1][0]
-    SiMg = args[1][1]
-    CaMg = args[1][2]
-    AlMg = args[1][3]
+    FeMg = abs(args[1][0])
+    SiMg = abs(args[1][1])
+    CaMg = abs(args[1][2])
+    AlMg = abs(args[1][3])
 
     filename = args[3]
     UMLM     = args[4]
-    
     plxMan = str(Mantle_wt_per.get('MgO')) + ' ' + str(Mantle_wt_per.get('SiO2')) + ' ' \
              + str(Mantle_wt_per.get('FeO')) + ' ' + str(Mantle_wt_per.get('CaO')) \
              + ' ' + str(Mantle_wt_per.get('Al2O3'))+ ' ' + str(0.) #last value included for Na
@@ -99,11 +98,11 @@ def get_mantle_percents(args, cor_wt):
 
 
     #these are the inputs for perplex
-    feo   = round(100*(mFe+mO)*mol[0]/M_man, 6)
-    mgo   = round(100*(mMg+mO)*mol[2]/M_man, 6)
-    sio2  = round(100*(mSi+2*mO)*mol[3]/M_man, 6)
-    cao   = round(100*(mCa+mO)*mol[4]/M_man, 6)
-    al2o3 = round(100*(mAl+1.5*mO)*mol[5]/M_man, 6)
+    feo   = abs(round(100*(mFe+mO)*mol[0]/M_man, 6))
+    mgo   = abs(round(100*(mMg+mO)*mol[2]/M_man, 6))
+    sio2  = abs(round(100*(mSi+2*mO)*mol[3]/M_man, 6))
+    cao   = abs(round(100*(mCa+mO)*mol[4]/M_man, 6))
+    al2o3 = abs(round(100*(mAl+1.5*mO)*mol[5]/M_man, 6))
 
     wtTot = feo+mgo+sio2+cao+al2o3
 
@@ -123,7 +122,6 @@ def get_mantle_percents(args, cor_wt):
     #update ratios to reflect bulk composition
     femg_blk = (mol[0]+Fe_core_mol)/(mol[2])
     simg_blk = (mol[3]+Si_core_mol)/(mol[2])
-
 
     if verbose:
         print('\nMantle composition input for perplex:')
@@ -268,7 +266,6 @@ def get_percents(*args):
 
     Mantle_wt_per = {'FeO': FeO_mant_wt, 'SiO2': SiO2_mant_wt, 'MgO': MgO_mant_wt, \
                      'CaO': CaO_mant_wt,'Al2O3':Al2O3_mant_wt}
-
     #decimal fraction of materials in CORE by mass, these are perplex inputs (hence the rounding)
     # this is the wt% of Fe and the Fe in FeSi *** so total Fe in core
 
@@ -295,8 +292,8 @@ def get_percents(*args):
     S_core_wt  = abs(round(S_core_wt*100.,8))
 
     Core_wt_per = {'Fe':Fe_core_wt,'Si':Si_core_wt,'O':O_core_wt,'S':S_core_wt}
-    Core_mol_per ={'Fe':Core_moles[0]/tot_moles_core,'Si':Core_moles[1]/tot_moles_core,\
-                  'O':Core_moles[2]/tot_moles_core,'S':Core_moles[3]/tot_moles_core}
+    Core_mol_per ={'Fe':abs(Core_moles[0]/tot_moles_core),'Si':abs(Core_moles[1]/tot_moles_core),\
+                  'O':abs(Core_moles[2]/tot_moles_core),'S':abs(Core_moles[3]/tot_moles_core)}
 
     #in order Fe, Mg, Si, O, Ca, Al in mantle
     Mantle_moles = Num_moles[4:]
@@ -399,7 +396,7 @@ def verbosity(x, mcor, mSi):
 def make_mantle_grid(Mantle_filename,LMUM):
 
     if LMUM == True:
-        
+
         file = open(Mantle_filename+'_UM.tab', 'r')
     else:
         file = open(Mantle_filename+'_LM.tab', 'r')

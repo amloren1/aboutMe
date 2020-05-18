@@ -13,7 +13,7 @@ from wtforms import (
     DateField,
     TimeField
 )
-from wtforms.validators import DataRequired, Email, ValidationError
+from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 
 from app.models import User
 
@@ -63,4 +63,26 @@ class CamQueryForm(FlaskForm):
     end_time = TimeField('End time', validators=[DataRequired()])
     find = SubmitField('Find')
 
+
+class RegistrationForm(FlaskForm):
+    """
+        allow users to register for extra permissions on the page
+    """
+    username = StringField('Username', validators = [DataRequired()])
+    email = StringField('Email', validators = [DataRequired(), Email()])
+    password = PasswordField('Password', validators = [DataRequired()])
+    password2 = PasswordField('Repeat Password', validators = [DataRequired(), EqualTo('password')])
+    submit = SubmitField('Register')
+
+    # custom validators below are automatically called by WTF
+    #  using the standard convention of validate_<field_name> WTF knows to call these
+    def validate_username(self, username):
+        user = User.query.filter_by(email=username.data).first()
+        if user is not None:
+            raise ValidationError('Username taken. Try another one')
+
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user is not None:
+            raise ValidationError('This email is already registered with an account.')
 

@@ -8,9 +8,9 @@ cur_path = os.path.dirname(os.path.realpath(__file__))
 
 # hack to allow scripts to be placed in subdirectories next to ExoPlex:
 if not os.path.exists('main') and os.path.exists('../main'):
-    
+
     sys.path.insert(1, os.path.abspath('..'))
-    
+
 
 
 if not os.path.exists(PerPlex_path+'/build') or not os.path.exists(PerPlex_path+'/vertex') \
@@ -26,21 +26,21 @@ if not os.path.exists(PerPlex_path+'/build') or not os.path.exists(PerPlex_path+
     perplex_mac   = 'http://www.perplex.ethz.ch/ExoPlex/Perple_X_6.8.1_OSX_10.6+_Intel_MC_Mar_6_2018_edited.zip'
 
     platform = sys.platform
-    
+
     #check platform to download correct perple_x version
     if platform != 'linux2':
         perplex_link = perplex_mac
     else:
         perplex_link = perplex_linux
-        
+
     try:
         filename = 'perplex.tar.gz'
         response = urllib.request.urlopen(perplex_link)
-        
+
         with open(filename, 'wb') as f: f.write(response.read())
-        
+
         tar = tarfile.open(filename, 'r:gz')
-        
+
         tar.extract('build', PerPlex_path)
         tar.extract('vertex', PerPlex_path)
         tar.extract('werami', PerPlex_path)
@@ -48,44 +48,51 @@ if not os.path.exists(PerPlex_path+'/build') or not os.path.exists(PerPlex_path+
 
     except:
         print('\nUnable to download Perple_x. Make sure you are connected to the internet')
-        
-        
-    
+
+
+
 
 
 def download_perplex():
     import urllib.request, urllib.error, urllib.parse
     import tarfile
-    
+
     print('\n\n** Downloading Perple_x. Please wait**')
     print('url: {}'.format('http://www.perplex.ethz.ch/perplex/exoplex/'))
-    
+
     perplex_linux = 'http://www.perplex.ethz.ch/perplex/exoplex/linux/Perple_X_6.8.1_Linux_64_gfortran.tar.gz'
     perplex_mac   = 'http://www.perplex.ethz.ch/perplex/exoplex/OSX/Perple_X_6.8.1_OSX_10.6+_Intel_MC_Mar_6_2018.zip'
-    
+
     try:
         filename = 'perplex.tar.gz'
         response = urllib.request.urlopen(perplex_linux)
-        
+
         with open(filename, 'wb') as f: f.write(response.read())
-        
+
         tar = tarfile.open(filename, 'r:gz')
-        
+
         tar.extract('build', PerPlex_path)
         tar.extract('vertex', PerPlex_path)
         tar.extract('werami', PerPlex_path)
-        
+
     except:
         print('Unable to download Perple_x. Make sure you are connected to the internet')
         return
     print('Successfully downloaded Perple_x. Stored in {}'.format(PerPlex_path))
-    
+
     return
-    
+
 
 
 def run_perplex(*args):
-    
+    if os.path.isdir("Solutions/"):
+        print(os.getcwd())
+        pass
+    else:
+        os.chdir(os.getcwd()+'/exoplex')
+
+    current_directory = os.getcwd()
+    #sys.path.insert(0, sys.path[0]+'/../')
 
     Mantle_wt_per = args[0]
 
@@ -95,7 +102,6 @@ def run_perplex(*args):
     Pressure_range_mantle = args[2][0]
     Temperature_range_mantle = args[2][1]
     resolution = args[2][2]
-
     filename = args[3]
     UMLM = args[4]
 
@@ -225,7 +231,7 @@ def run_perplex(*args):
     p.read()
     p.wait()
 
-    
+
     print('Finished with Vertex, beginning Werami')
 
     try:
@@ -254,7 +260,7 @@ def run_perplex(*args):
         phases = ['C2/c', 'Wus', 'Pv', 'an', 'Sp', 'O', 'Wad', \
         'Ring', 'Opx', 'Cpx', 'Aki', 'Gt', 'Ppv', 'CF', 'st', \
         'q', 'ca-pv', 'cfs', 'coe', 'ky', 'seif' ]
-        
+
         p.sendline('7')
         for phase in phases:
             p.sendline(phase)
@@ -268,7 +274,7 @@ def run_perplex(*args):
                 continue
             else:
                 continue
-       
+
         # exit parameter choosing
 
         p.sendline('0')
@@ -277,7 +283,7 @@ def run_perplex(*args):
 
         # Enter number of nodes in the T(K)     and P(bar)   directions:
         p.sendline(resolution)
-        
+
         p.logfile = open('werami.log','wb')
         p.expect('EXIT', timeout=None)
         p.terminate()
@@ -291,9 +297,11 @@ def run_perplex(*args):
         successful = True
         try:
             clear_perplex_files(solutionFileNameMan)
+
         except:
             print('**ERROR: Could not remove excess files from perplex run')
             pass
+        os.chdir(current_directory)
     except:
         successful = False
         print('**ERROR**')
@@ -326,4 +334,4 @@ def clear_perplex_files(solutionFileNameMan):
     return filename
 
 
-    
+
