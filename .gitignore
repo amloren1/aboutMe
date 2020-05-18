@@ -19,3 +19,4 @@ exoplex/vertex.log
 exoplex/werami.log
 .vscode
 .python-version
+logs/*
