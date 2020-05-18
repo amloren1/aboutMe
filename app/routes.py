@@ -119,3 +119,14 @@ def cam_query():
             flash('you messed something up. Make sure all fields are filled', 'danger')
 
     return render_template("cam_query.html", title="Security Video", form=form)
+
+
+@app.route("/user/<username>")
+@login_required
+def user(username):
+    """
+    simple page for users to check out their profile and make edits
+    """
+    user = User.query.filter_by(username=username).first_or_404()
+
+    return render_template("user.html", user = user)
